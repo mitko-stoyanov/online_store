@@ -95,7 +95,7 @@ class MessagesListView(PermissionRequiredMixin, LoginRequiredMixin, ListView):
     template_name = 'contacts/messages.html'
 
 
-class DeleteMessage(PermissionRequiredMixin, DeleteView):
+class DeleteMessage(PermissionRequiredMixin, LoginRequiredMixin, DeleteView):
     permission_required = 'web.delete_contact'
 
     def handle_no_permission(self):
