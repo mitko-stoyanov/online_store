@@ -1,7 +1,7 @@
 from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMixin
 from django.shortcuts import render, redirect
 from django.urls import reverse_lazy
-from django.views.generic import CreateView, ListView, DeleteView
+from django.views.generic import CreateView, ListView, DeleteView, TemplateView
 from clothes_shop.web.forms import ContactForm
 from clothes_shop.web.models import Contact, Clothes, Shoes, Accessories
 
@@ -65,16 +65,16 @@ def show_index(request):
     return render(request, 'index.html', context)
 
 
-def show_about(request):
-    return render(request, 'about.html')
+class AboutPageView(TemplateView):
+    template_name = 'about.html'
 
 
-def show_product_category(request):
-    return render(request, 'add-product.html')
+class AddProductsCategoryView(TemplateView):
+    template_name = 'add-product.html'
 
 
-def show_forbidden_page(request):
-    return render(request, 'forbidden-page.html')
+class ForbiddenPageView(TemplateView):
+    template_name = 'forbidden-page.html'
 
 
 class ContactView(LoginRequiredMixin, CreateView):

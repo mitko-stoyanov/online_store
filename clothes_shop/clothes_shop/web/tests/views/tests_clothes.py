@@ -41,8 +41,3 @@ class ClothesDetailViewTests(ProfileDataMixin, ClothesDataMixin, django_test.Tes
         my_clothes = Clothes(**self.VALID_CLOTHES_CREDENTIALS)
         max_length = my_clothes._meta.get_field('title').max_length
         self.assertEqual(max_length, 30)
-
-    def test_if_user_is_logged_in_successful(self):
-        user = UserModel.objects.create_user(**self.VALID_USER_CREDENTIALS)
-        self.client.login(**self.VALID_USER_CREDENTIALS)
-        self.assertTrue(user.is_authenticated)

@@ -26,3 +26,15 @@ class ClothesDataMixin:
         'image': 'http://cat.png',
         'price': 143,
     }
+
+
+class ShoesDataMixin:
+    VALID_SHOES_DATA = {
+        'title': 'NewShoes',
+        'size': 4,
+        'price': 134,
+        'shoes_type': 'Sandals',
+        'suitable_for': 'Summer',
+        'description': 'dsadas',
+        'image': 'https://shoes.png',
+    }

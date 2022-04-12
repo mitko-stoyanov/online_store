@@ -6,17 +6,18 @@ from clothes_shop.web.views.authentication_views import UserRegistrationView, Us
     ChangePasswordView, DeleteProfileView
 from clothes_shop.web.views.clothes_views import ShowClothesShopView, ClothesDetailView, AddClothesView, \
     EditClothesView, DeleteClothesView
-from clothes_shop.web.views.main_views import show_index, show_about, ContactView, show_profile, MessagesListView, \
-    DeleteMessage, show_product_category, show_my_adds, show_all_adds, show_forbidden_page
+from clothes_shop.web.views.main_views import show_index, ContactView, show_profile, MessagesListView, \
+    DeleteMessage, show_my_adds, show_all_adds, AboutPageView, AddProductsCategoryView, \
+    ForbiddenPageView
 from clothes_shop.web.views.shoes_views import ShowShoesShopView, ShoesDetailView, EditShoesView, DeleteShoesView, \
     AddShoesView
 
 urlpatterns = (
     # ------------------------- general urls -------------------------
     path('', show_index, name='index'),
-    path('about/', show_about, name='about'),
+    path('about/', AboutPageView.as_view(), name='about'),
     path('contacts/', ContactView.as_view(), name='contacts'),
-    path('add/', show_product_category, name='add products'),
+    path('add/', AddProductsCategoryView.as_view(), name='add products'),
 
     # ------------------------- authentication urls -------------------------
     path('register/', UserRegistrationView.as_view(), name='register'),
@@ -56,5 +57,5 @@ urlpatterns = (
     path('profile/delete/<int:pk>/', DeleteProfileView.as_view(), name='delete profile'),
 
     # ------------------------- error pages -------------------------
-    path('forbidden/', show_forbidden_page, name='forbidden page')
+    path('forbidden/', ForbiddenPageView.as_view(), name='forbidden page')
 )
