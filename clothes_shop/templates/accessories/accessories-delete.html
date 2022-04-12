@@ -1,0 +1,42 @@
+{% extends 'base/base.html' %}
+{% block page_content %}
+
+    <br>
+    <br>
+    <section class="vh-50" style="background-color: white;">
+        <div class="container h-100">
+            <div class="row d-flex justify-content-center align-items-center h-100">
+                <div class="col-md-10 col-xl-8">
+                    <div class="card text-black" style="border-radius: 25px; background-color: #e1e1e3">
+                        <div class="card-body p-md-0">
+                            <div class="row justify-content-center">
+                                <div class="col-md-10 col-lg-6 col-xl-5 order-2 order-lg-1">
+                                    <br>
+                                    <p class="text-center h1 fw-bold ">
+                                        Do you want to delete {{ accessories.title }}?
+                                    </p>
+                                    <br>
+                                    <form class="col-md-9 m-auto" method="post" role="form"
+                                          action="{% url 'delete_accessories' object.pk %}">
+                                        {% csrf_token %}
+                                        <div class="row">
+                                            <div class="col text-center ">
+                                                <button type="submit" class="btn btn-success btn-lg px-5 text-center">
+                                                    Delete
+                                                </button>
+                                            </div>
+                                        </div>
+                                        <br>
+                                    </form>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <br>
+    <!-- End Contact -->
+{% endblock %}

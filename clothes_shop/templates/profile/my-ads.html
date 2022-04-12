@@ -1,0 +1,60 @@
+{% extends 'base/base.html' %}
+{% block page_content %}
+    <br>
+    <h1 class="text-center">My Ads</h1>
+    <table class="table table-striped">
+        <thead>
+        <tr>
+            <th scope="col">Type</th>
+            <th scope="col">Title</th>
+            <th scope="col">Description</th>
+            <th scope="col">Price</th>
+            <th scope="col">Action</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% if clothes %}
+            {% for clothing in clothes %}
+                <tr>
+                    <td>Clothes</td>
+                    <td>{{ clothing.title }}</td>
+                    <td>{{ clothing.description }}</td>
+                    <td>{{ clothing.price|floatformat:2 }}</td>
+                    <td>
+                        <a class="btn btn-success text-white mt-1 btn-sm"
+                           href="{% url 'shop single' clothing.pk %}">View</a>
+                    </td>
+                </tr>
+            {% endfor %}
+        {% endif %}
+        {% if shoes %}
+            {% for shoe in shoes %}
+                <tr>
+                    <td>Shoes</td>
+                    <td>{{ shoe.title }}</td>
+                    <td>{{ shoe.description }}</td>
+                    <td>{{ shoe.price|floatformat:2 }}</td>
+                    <td>
+                        <a class="btn btn-success text-white mt-1 btn-sm"
+                           href="{% url 'shoes-shop single' shoe.pk %}">View</a>
+                    </td>
+                </tr>
+            {% endfor %}
+        {% endif %}
+        {% if accessories %}
+            {% for accessorie in accessories %}
+                <tr>
+                    <td>Accessories</td>
+                    <td>{{ accessorie.title }}</td>
+                    <td>{{ accessorie.description }}</td>
+                    <td>{{ accessorie.price|floatformat:2 }}</td>
+                    <td>
+                        <a class="btn btn-success text-white mt-1 btn-sm"
+                           href="{% url 'accessories-shop single' accessorie.pk %}">View</a>
+                    </td>
+                </tr>
+            {% endfor %}
+        {% endif %}
+        </tbody>
+    </table>
+{% endblock %}

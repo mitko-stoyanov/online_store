@@ -1,0 +1,39 @@
+{% extends 'base/base.html' %}
+{% block page_content %}
+    <br>
+    <h1 class="text-center">All Messages:</h1>
+    <br>
+    {% if object_list %}
+        <table class="table table-striped">
+            <thead>
+            <tr>
+                <th scope="col">Name</th>
+                <th scope="col">Email</th>
+                <th scope="col">Subject</th>
+                <th scope="col">Message</th>
+                <th scope="col">Action</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for user_message in object_list %}
+                <tr>
+                    <td>{{ user_message.name }}</td>
+                    <td>{{ user_message.email }}</td>
+                    <td>{{ user_message.subject }}</td>
+                    <td>{{ user_message.message }}</td>
+                    <td>
+                        <form method="post" action="{% url 'delete_message' user_message.pk %}">
+                            {% csrf_token %}
+                            <button class="btn btn-success btn-sm">Delete</button>
+                        </form>
+                    </td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+        <br>
+    {% else %}
+        <p class="text-center">--- There are no messages from users! ---</p>
+        <br>
+    {% endif %}
+{% endblock %}

@@ -1,0 +1,42 @@
+{% extends 'base/base.html' %}
+{% block page_content %}
+    <br>
+    <span class="border border-primary">
+    <h1 class="text-center">My Profile:</h1>
+    {% if request.user.is_superuser %}
+        <p class="text-center">Logged in as: {{ user.email }} <b>(SuperUser)</b></p>
+    {% elif request.user.is_staff %}
+        <p class="text-center">Logged in as: {{ user.email }} <b>(Staff)</b></p>
+    {% else %}
+        <p class="text-center">Logged in as: {{ user.email }} <b>(User)</b></p>
+    {% endif %}
+    {% if user.is_superuser or request.user.is_staff %}
+        <div class="d-flex justify-content-center">
+            <table>
+                <tr>
+                    <td><a href="{% url 'all adds' %}" class="btn btn-success btn-lg" role="button" aria-pressed="true">
+                        All Ads</a></td>
+                    <td><a href="{% url 'messages' %}" class="btn btn-success btn-lg" role="button" aria-pressed="true">
+                        Messages</a>
+                        <span class="position-absolute top left-100 translate-middle badge rounded-pill bg-primary text-light">{{ messages_count }}</span>
+                    </td>
+                </tr>
+            </table>
+        </div>
+    {% endif %}
+    <hr style="height:2px;color:black">
+    <div class="container">
+            <div class="col-md-12 text-center">
+                <a href="{% url 'my adds' %}" class="btn btn-success btn-lg" role="button"
+                   aria-pressed="true"> My Ads</a>
+                <a href="{% url 'change password' %}" class="btn btn-success btn-lg" role="button" aria-pressed="true">Change Password</a>
+                <a href="{% url 'delete profile' request.user.pk %}" class="btn btn-success btn-lg" role="button"
+                   aria-pressed="true"> Delete Profile</a>
+                <a href="{% url 'logout' %}" class="btn btn-success btn-lg text-center" role="button"
+                   aria-pressed="true">Logout</a>
+            </div>
+        </div>
+    <br>
+{% endblock %}
+{#<a href="{% url 'messages' %}" class="btn btn-success btn-lg" role="button" aria-pressed="true">#}
+{#<span class="position-absolute top-50 left-110 translate-middle badge rounded-pill bg-primary text-light">{{ messages_count }}</span>#}
