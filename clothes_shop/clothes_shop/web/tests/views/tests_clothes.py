@@ -36,6 +36,6 @@ class ClothesDetailViewTests(django_test.TestCase):
         self.assertTrue(response.context['is_owner'])
 
     def test_when_opening__not_existing_clothes_detail_page__expect_404(self):
-        response = self.client.get(reverse('shop single', kwargs={'pk': 10}))
+        response = self.client.get(reverse('shop single', kwargs={'pk': 15}))
 
         self.assertEqual(response.status_code, 404)
