@@ -9,3 +9,20 @@ class BootstrapFormMixin:
                 field.widget.attrs['class'] = ''
             field.widget.attrs['class'] += ' form-control'
 
+
+class ProfileDataMixin:
+    VALID_USER_CREDENTIALS = {
+        'email': 'test@abv.bg',
+        'password': '12345',
+    }
+
+
+class ClothesDataMixin:
+    VALID_CLOTHES_CREDENTIALS = {
+        'title': 'MyClothes',
+        'clothes_type': 'Jeans',
+        'materials': 'Cotton',
+        'description': 'dasdasd',
+        'image': 'http://cat.png',
+        'price': 143,
+    }
