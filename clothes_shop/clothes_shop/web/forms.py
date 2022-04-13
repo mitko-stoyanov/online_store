@@ -111,11 +111,7 @@ class EditClothesForm(BootstrapFormMixin, forms.ModelForm):
 class DeleteClothesForm(BootstrapFormMixin, forms.ModelForm):
     class Meta:
         model = Clothes
-        fields = ('title', 'brand', 'clothes_type', 'materials', 'description', 'image', 'price')
-
-    def __init__(self, *args, **kwargs):
-        super().__init__(*args, **kwargs)
-        self._init_bootstrap_form_controls()
+        fields = ()
 
     def save(self, commit=True):
         self.instance.delete()
@@ -135,7 +131,7 @@ class AddShoesForm(BootstrapFormMixin, forms.ModelForm):
                 attrs={'placeholder': 'Enter a title'},
             ),
             'size': forms.TextInput(
-                attrs={'placeholder': 'Enter a brand(Not Required)'},
+                attrs={'placeholder': 'Enter a size'},
             ),
             'description': forms.Textarea(
                 attrs={'placeholder': 'Enter a description'},
@@ -168,11 +164,7 @@ class EditShoesForm(BootstrapFormMixin, forms.ModelForm):
 class DeleteShoesForm(BootstrapFormMixin, forms.ModelForm):
     class Meta:
         model = Shoes
-        fields = ('title', 'size', 'price', 'shoes_type', 'suitable_for', 'description', 'image')
-
-    def __init__(self, *args, **kwargs):
-        super().__init__(*args, **kwargs)
-        self._init_bootstrap_form_controls()
+        fields = ()
 
     def save(self, commit=True):
         self.instance.delete()
@@ -185,12 +177,6 @@ class AddAccessoriesForm(BootstrapFormMixin, forms.ModelForm):
     class Meta:
         model = Accessories
         fields = ('title', 'description', 'image', 'price', 'accessories_type', 'gender')
-
-        widgets = {
-            'title': forms.TextInput(
-                attrs={'placeholder': 'Enter a title'},
-            ),
-        }
 
     def __init__(self, user, *args, **kwargs):
         super().__init__(*args, **kwargs)
@@ -218,11 +204,7 @@ class EditAccessoriesForm(BootstrapFormMixin, forms.ModelForm):
 class DeleteAccessoriesForm(BootstrapFormMixin, forms.ModelForm):
     class Meta:
         model = Accessories
-        fields = ('title', 'description', 'image', 'price', 'accessories_type', 'gender')
-
-    def __init__(self, *args, **kwargs):
-        super().__init__(*args, **kwargs)
-        self._init_bootstrap_form_controls()
+        fields = ()
 
     def save(self, commit=True):
         self.instance.delete()
