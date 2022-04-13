@@ -1,3 +1,6 @@
+from django.shortcuts import redirect
+
+
 class BootstrapFormMixin:
     fields = {}
 
@@ -8,6 +11,14 @@ class BootstrapFormMixin:
             if 'class' not in field.widget.attrs:
                 field.widget.attrs['class'] = ''
             field.widget.attrs['class'] += ' form-control'
+
+
+class CheckUserAccessMixin:
+    def dispatch(self, request, *args, **kwargs):
+        if not request.user.is_staff and not request.user.is_superuser and\
+                not request.user == self.get_object().user:
+            return redirect('index')
+        return super().dispatch(request, *args, **kwargs)
 
 
 class ProfileDataMixin:

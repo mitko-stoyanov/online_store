@@ -2,6 +2,7 @@ from django import forms
 
 from django.contrib.auth import get_user_model
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm, PasswordChangeForm
+from django.contrib.auth.models import Group
 
 from clothes_shop.web.helpers import BootstrapFormMixin
 from clothes_shop.web.models import Contact, Clothes, Shoes, Accessories
@@ -20,6 +21,15 @@ class UserRegistrationForm(BootstrapFormMixin, UserCreationForm):
         super().__init__(*args, **kwargs)
         self._init_bootstrap_form_controls()
 
+    def save(self, commit=True):
+        user = super().save(commit=commit)
+        group = Group.objects.get(name='regular_user')
+        user.groups.add(group)
+
+        if commit:
+            user.save()
+        return user
+
 
 class UserLoginForm(BootstrapFormMixin, AuthenticationForm):
     def __init__(self, *args, **kwargs):
@@ -33,25 +43,23 @@ class ChangePasswordForm(BootstrapFormMixin, PasswordChangeForm):
         self._init_bootstrap_form_controls()
 
 
-class ContactForm(forms.ModelForm):
+class ContactForm(BootstrapFormMixin, forms.ModelForm):
     class Meta:
         model = Contact
         fields = '__all__'
 
         widgets = {
             'name': forms.TextInput(
-                attrs={'class': 'form-control mt-1', 'placeholder': 'Enter a full name'},
+                attrs={'placeholder': 'Enter a full name'},
             ),
             'email': forms.TextInput(
-                attrs={'class': 'form-control mt-1', 'placeholder': 'Enter a valid email'},
-            ),
-            'subject': forms.TextInput(
-                attrs={'class': 'form-control mt-1'},
-            ),
-            'message': forms.Textarea(
-                attrs={'class': 'form-control mt-1'},
+                attrs={'placeholder': 'Enter a valid email'},
             ),
         }
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self._init_bootstrap_form_controls()
 
 
 # ------------------------- Clothe forms -------------------------
@@ -108,9 +116,6 @@ class DeleteClothesForm(BootstrapFormMixin, forms.ModelForm):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self._init_bootstrap_form_controls()
-        for _, field in self.fields.items():
-            field.widget.attrs['disabled'] = 'disabled'
-            field.required = False
 
     def save(self, commit=True):
         self.instance.delete()
@@ -168,9 +173,6 @@ class DeleteShoesForm(BootstrapFormMixin, forms.ModelForm):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self._init_bootstrap_form_controls()
-        for _, field in self.fields.items():
-            field.widget.attrs['disabled'] = 'disabled'
-            field.required = False
 
     def save(self, commit=True):
         self.instance.delete()
@@ -221,9 +223,6 @@ class DeleteAccessoriesForm(BootstrapFormMixin, forms.ModelForm):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self._init_bootstrap_form_controls()
-        for _, field in self.fields.items():
-            field.widget.attrs['disabled'] = 'disabled'
-            field.required = False
 
     def save(self, commit=True):
         self.instance.delete()

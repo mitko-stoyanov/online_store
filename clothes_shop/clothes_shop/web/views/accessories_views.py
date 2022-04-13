@@ -4,6 +4,7 @@ from django.urls import reverse_lazy
 from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
 
 from clothes_shop.web.forms import AddAccessoriesForm, EditAccessoriesForm, DeleteAccessoriesForm
+from clothes_shop.web.helpers import CheckUserAccessMixin
 from clothes_shop.web.models import Accessories
 
 
@@ -40,7 +41,7 @@ class AddAccessoriesView(PermissionRequiredMixin, CreateView):
         return kwargs
 
 
-class EditAccessoriesView(LoginRequiredMixin, UpdateView):
+class EditAccessoriesView(LoginRequiredMixin, CheckUserAccessMixin, UpdateView):
     model = Accessories
     template_name = 'accessories/edit-accessories.html'
     form_class = EditAccessoriesForm
@@ -49,7 +50,7 @@ class EditAccessoriesView(LoginRequiredMixin, UpdateView):
         return reverse_lazy('accessories-shop single', kwargs={'pk': self.object.id})
 
 
-class DeleteAccessoryView(PermissionRequiredMixin, LoginRequiredMixin, DeleteView):
+class DeleteAccessoryView(PermissionRequiredMixin, LoginRequiredMixin, CheckUserAccessMixin, DeleteView):
     permission_required = 'web.delete_accessories'
 
     def handle_no_permission(self):
