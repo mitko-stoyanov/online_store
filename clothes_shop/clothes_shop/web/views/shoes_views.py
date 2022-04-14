@@ -53,9 +53,6 @@ class EditShoesView(LoginRequiredMixin, CheckUserAccessMixin, UpdateView):
 class DeleteShoesView(PermissionRequiredMixin, LoginRequiredMixin, CheckUserAccessMixin, DeleteView):
     permission_required = 'web.delete_shoes'
 
-    def handle_no_permission(self):
-        return redirect('forbidden page')
-
     model = Shoes
     template_name = 'shoes/shoes-delete.html'
     form_class = DeleteShoesForm

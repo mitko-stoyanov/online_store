@@ -12,7 +12,6 @@ class UserRegistrationView(CreateView):
     template_name = 'profile/register.html'
     success_url = reverse_lazy('index')
 
-    # after the registration the user is logged in!
     def form_valid(self, *args, **kwargs):
         result = super().form_valid(*args, **kwargs)
         login(self.request, self.object)

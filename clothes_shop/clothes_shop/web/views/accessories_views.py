@@ -53,9 +53,6 @@ class EditAccessoriesView(LoginRequiredMixin, CheckUserAccessMixin, UpdateView):
 class DeleteAccessoryView(PermissionRequiredMixin, LoginRequiredMixin, CheckUserAccessMixin, DeleteView):
     permission_required = 'web.delete_accessories'
 
-    def handle_no_permission(self):
-        return redirect('forbidden page')
-
     model = Accessories
     template_name = 'accessories/accessories-delete.html'
     form_class = DeleteAccessoriesForm

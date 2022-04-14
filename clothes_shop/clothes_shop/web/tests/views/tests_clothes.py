@@ -23,11 +23,6 @@ class ClothesDetailViewTests(ProfileDataMixin, ClothesDataMixin, django_test.Tes
 
         self.assertTrue(response.context['is_owner'])
 
-    def test_when_opening__not_existing_clothes_detail_page__expect_404(self):
-        response = self.client.get(reverse('shop single', kwargs={'pk': 15}))
-
-        self.assertEqual(response.status_code, 404)
-
     def test_clothes_title__when_valid_expect_correct_name(self):
         my_clothes = Clothes(**self.VALID_CLOTHES_CREDENTIALS)
 
