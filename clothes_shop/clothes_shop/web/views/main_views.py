@@ -1,9 +1,15 @@
 from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMixin
 from django.shortcuts import render, redirect
 from django.urls import reverse_lazy
+from django.views import View
 from django.views.generic import CreateView, ListView, DeleteView, TemplateView
 from clothes_shop.web.forms import ContactForm
 from clothes_shop.web.models import Contact, Clothes, Shoes, Accessories
+
+
+class InternalError(View):
+    def get(self, request):
+        return render(request, 'exceptions/exceptions_page.html')
 
 
 def show_profile(request):
@@ -74,7 +80,7 @@ class AddProductsCategoryView(TemplateView):
 
 
 class ForbiddenPageView(TemplateView):
-    template_name = 'forbidden-page.html'
+    template_name = 'exceptions/forbidden-page.html'
 
 
 class ContactView(LoginRequiredMixin, CreateView):
