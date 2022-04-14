@@ -36,11 +36,6 @@ class ClothesDetailViewTests(ProfileDataMixin, ClothesDataMixin, django_test.Tes
 
         self.assertEqual(f'{expected_clothes_title} -> {expected_clothes_price:.2f}', my_clothes.__str__())
 
-    def test_title_max_length(self):
-        my_clothes = Clothes(**self.VALID_CLOTHES_CREDENTIALS)
-        max_length = my_clothes._meta.get_field('title').max_length
-        self.assertEqual(max_length, 30)
-
     def test_if_user_can_view_new_clothes_single_page(self):
         user = UserModel.objects.create_user(**self.VALID_USER_CREDENTIALS)
 
@@ -54,7 +49,16 @@ class ClothesDetailViewTests(ProfileDataMixin, ClothesDataMixin, django_test.Tes
 
         self.assertEqual(response.status_code, 200)
 
+
+class EditClothesViewTests(ProfileDataMixin, ClothesDataMixin, django_test.TestCase):
+
     def test_if_edited_title_is_correctly_saved(self):
         my_clothes = Clothes(**self.VALID_CLOTHES_CREDENTIALS)
         my_clothes.title = 'NewTitle'
         self.assertEqual('NewTitle', my_clothes.title)
+
+    def test_expect_correct_template(self):
+        user = UserModel.objects.create_user(**self.VALID_USER_CREDENTIALS)
+        my_clothes = Clothes.objects.create(**self.VALID_CLOTHES_CREDENTIALS, user=user)
+        self.client.get(reverse('edit_clothing', kwargs={'pk': my_clothes.pk}))
+        self.assertTemplateUsed('clothes/edit-clothes.html')
