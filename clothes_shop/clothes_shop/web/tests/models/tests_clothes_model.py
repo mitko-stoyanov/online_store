@@ -1,7 +1,6 @@
 from django import test as django_test
 from django.contrib.auth import get_user_model
 from django.core.exceptions import ValidationError
-from django.urls import reverse
 
 from clothes_shop.web.helpers import ProfileDataMixin, ClothesDataMixin
 from clothes_shop.web.models import Clothes

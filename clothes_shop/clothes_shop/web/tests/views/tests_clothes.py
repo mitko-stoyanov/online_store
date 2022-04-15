@@ -4,6 +4,7 @@ from django.urls import reverse
 
 from clothes_shop.web.helpers import ProfileDataMixin, ClothesDataMixin
 from clothes_shop.web.models import Clothes
+from clothes_shop.web.views.clothes_views import ShowClothesShopView
 
 UserModel = get_user_model()
 
@@ -57,3 +58,47 @@ class EditClothesViewTests(ProfileDataMixin, ClothesDataMixin, django_test.TestC
         my_clothes = Clothes.objects.create(**self.VALID_CLOTHES_CREDENTIALS, user=user)
         self.client.get(reverse('edit_clothing', kwargs={'pk': my_clothes.pk}))
         self.assertTemplateUsed('clothes/edit-clothes.html')
+
+
+class ShowClothesShopViewTests(ProfileDataMixin, ClothesDataMixin, django_test.TestCase):
+    def setUp(self) -> None:
+        self.factory = django_test.RequestFactory()
+        self.user = UserModel.objects.create(**self.VALID_USER_CREDENTIALS)
+
+    def test_when_render_the_correct_template(self):
+        request = self.factory.get('clothes-shop/')
+        request.user = self.user
+        response = ShowClothesShopView.as_view()(request)
+
+        self.assertEqual(response.status_code, 200)
+
+    def test_when_there_are_clothes__expect_clothes(self):
+        self.clothes = Clothes.objects.create(
+            **self.VALID_CLOTHES_CREDENTIALS,
+            user=self.user
+        )
+        request = self.factory.get('clothes-shop/')
+        request.user = self.user
+        response = ShowClothesShopView.as_view()(request)
+
+        self.assertEqual(response.context_data['all_clothes'][0], self.clothes)
+        self.assertEqual(len(response.context_data['all_clothes']), 1)
+
+    def test_when_there_are_no_clothes__expect_empty(self):
+        request = self.factory.get('clothes-shop/')
+        request.user = self.user
+        response = ShowClothesShopView.as_view()(request)
+
+        self.assertEqual(0, len(response.context_data['all_clothes']))
+
+    def test_when_delete_clothes__expect_len_0(self):
+        self.clothes = Clothes.objects.create(
+            **self.VALID_CLOTHES_CREDENTIALS,
+            user=self.user
+        )
+        request = self.factory.get('clothes-shop/')
+        request.user = self.user
+        response = ShowClothesShopView.as_view()(request)
+
+        self.clothes.delete()
+        self.assertEqual(len(response.context_data['all_clothes']), 0)

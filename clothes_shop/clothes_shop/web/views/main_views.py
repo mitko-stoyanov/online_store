@@ -56,13 +56,13 @@ def show_index(request):
     products = []
 
     if Clothes.objects.all():
-        last_clothing = Clothes.objects.order_by('-id')[0:1].get()
+        last_clothing = Clothes.objects.order_by('-id').first()
         products.append(last_clothing)
     if Shoes.objects.all():
-        last_shoes = Shoes.objects.order_by('-id')[0:1].get()
+        last_shoes = Shoes.objects.order_by('-id').first()
         products.append(last_shoes)
     if Accessories.objects.all():
-        last_accessories = Accessories.objects.order_by('-id')[0:1].get()
+        last_accessories = Accessories.objects.order_by('-id').first()
         products.append(last_accessories)
 
     context = {
@@ -75,8 +75,9 @@ class AboutPageView(TemplateView):
     template_name = 'about.html'
 
 
-class AddProductsCategoryView(TemplateView):
+class AddProductsCategoryView(LoginRequiredMixin, TemplateView):
     template_name = 'add-product.html'
+    login_url = 'login'
 
 
 class ForbiddenPageView(TemplateView):

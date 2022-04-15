@@ -15,7 +15,7 @@ class BootstrapFormMixin:
 
 class CheckUserAccessMixin:
     def dispatch(self, request, *args, **kwargs):
-        if not request.user.is_staff and not request.user.is_superuser and\
+        if not request.user.is_staff and not request.user.is_superuser and \
                 not request.user == self.get_object().user:
             return redirect('index')
         return super().dispatch(request, *args, **kwargs)
@@ -48,4 +48,15 @@ class ShoesDataMixin:
         'suitable_for': 'Summer',
         'description': 'dsadas',
         'image': 'https://shoes.png',
+    }
+
+
+class AccessoriesDataMixin:
+    VALID_ACCESSORIES_DATA = {
+        'title': 'NewAccessories',
+        'description': 'dasdas',
+        'image': 'https://accessories.png',
+        'price': 150,
+        'accessories_type': 'Sunglasses',
+        'gender': 'Male',
     }
