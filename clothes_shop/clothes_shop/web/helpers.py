@@ -16,7 +16,7 @@ class BootstrapFormMixin:
 class CheckUserAccessMixin:
     def dispatch(self, request, *args, **kwargs):
         if not request.user.is_staff and not request.user.is_superuser and \
-                not request.user == self.get_object().user:
+                not request.user.pk == self.kwargs['pk']:
             return redirect('index')
         return super().dispatch(request, *args, **kwargs)
 
