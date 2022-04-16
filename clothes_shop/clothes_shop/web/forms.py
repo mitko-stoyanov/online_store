@@ -178,6 +178,15 @@ class AddAccessoriesForm(BootstrapFormMixin, forms.ModelForm):
         model = Accessories
         fields = ('title', 'description', 'image', 'price', 'accessories_type', 'gender')
 
+        widgets = {
+            'title': forms.TextInput(
+                attrs={'placeholder': 'Enter a title'},
+            ),
+            'description': forms.Textarea(
+                attrs={'placeholder': 'Enter a description'},
+            ),
+        }
+
     def __init__(self, user, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self.user = user
